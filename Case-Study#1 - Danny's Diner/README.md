@@ -1,6 +1,6 @@
                                                       #Case Study #1-Danny's Diner  
 
-                                      ![image](https://8weeksqlchallenge.com/images/case-study-designs/1.png)  
+                                      ![image](Danny's Diner.png)  
                                       
 
 # Table of Contents  
@@ -35,7 +35,7 @@ You can inspect the entity relationship diagram and example data below.
 
 $**Entity Relationship Diagram**  
 
-![image](ERD.png)
+![image](ER-Diagram.png)
 
 #**Tables Used**  
 Below are the tables that are used in this case study:
