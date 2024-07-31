@@ -1,6 +1,6 @@
 # **Case Study #1 - Danny's Diner**
 
-![image](Danny's Diner.png)  
+![Danny's Diner](Case-Study#1 - Danny's Diner/Danny's Diner.png)  
                                       
 
 # Table of Contents  
