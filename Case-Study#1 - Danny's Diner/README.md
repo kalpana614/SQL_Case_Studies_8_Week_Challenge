@@ -1,5 +1,4 @@
 # **Case Study #1 - Danny's Diner**
-----
 
 ![image](Danny's Diner.png)  
                                       
