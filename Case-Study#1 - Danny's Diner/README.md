@@ -35,7 +35,7 @@ You can inspect the entity relationship diagram and example data below.
 
 # **Entity Relationship Diagram**  
 
-![image](ER-Diagram.jpg)
+![image](ER_Diagram.jpg)
 
 # **Tables Used**  
 Below are the tables that are used in this case study:
