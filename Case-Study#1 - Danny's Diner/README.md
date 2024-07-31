@@ -1,6 +1,6 @@
 # **Case Study #1 - Danny's Diner**
 
-![Danny's Diner](Danny's Diner.png)  
+![Danny's Diner](https://camo.githubusercontent.com/7f3709deeab071f6ca27396d1c21a1f2d681e7b4b2f4d9711bc57940d1342047/68747470733a2f2f387765656b73716c6368616c6c656e67652e636f6d2f696d616765732f636173652d73747564792d64657369676e732f312e706e67)  
                                       
 
 # Table of Contents  
@@ -35,7 +35,7 @@ You can inspect the entity relationship diagram and example data below.
 
 # **Entity Relationship Diagram**  
 
-![image](ER-Diagram.png)
+![image](ER-Diagram.jpg)
 
 # **Tables Used**  
 Below are the tables that are used in this case study:
