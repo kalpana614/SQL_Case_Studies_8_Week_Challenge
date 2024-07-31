@@ -11,6 +11,7 @@ on
 group by 
 	s.customer_id;
 
+```plaintext
 ### Result Set for Query: Total Amount Each Customer Spent
 
 | customer_id | total_amount_Spent |
@@ -19,4 +20,5 @@ group by
 | B           | 74         |
 | C           | 36         |
 
+```plaintext
 ### 1. What is the total amount each customer spent at the restaurant?
