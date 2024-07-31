@@ -8,8 +8,7 @@ select
 	sum(m.price) as total_amount_spent
 from sales s
 join menu m
-on
-	s.product_id = m.product_id
+	on s.product_id = m.product_id
 group by s.customer_id;
 
 ```
@@ -52,8 +51,7 @@ select
 	m.product_name
 from sales s
 join menu m
-on
-	s.product_id = m.product_id
+	on s.product_id = m.product_id
 where (s.customer_id, s.order_date) in (select customer_id, min(order_date) from  sales group by 1);
 
 ```
@@ -67,7 +65,7 @@ Select s.customer_id,
        DENSE_RANK() OVER (PARTITION BY S.Customer_ID Order by S.order_date) as rnk
 From menu m
 join sales s
-On m.product_id = s.product_id
+	On m.product_id = s.product_id
 group by s.customer_id, m.product_name,s.order_date
 )
 Select
@@ -97,7 +95,7 @@ select
 	count(*) as order_count
 from sales s
 join menu m
-On m.product_id = s.product_id
+	On m.product_id = s.product_id
 group by m.product_name
 order by purchased_num desc
 limit 1;
@@ -122,7 +120,7 @@ select
 	dense_rank() over( partition by s.customer_id order by count(s.product_id) desc) 
 From sales s
 join menu m
-On s.product_id = m.product_id
+	On s.product_id = m.product_id
 group by s.customer_id, m.product_name)
 
 select
@@ -153,20 +151,18 @@ select
 	s.customer_id, 
 	s.product_id,
 	s.order_date
-from 
-sales s join 
-members m 
-on s.customer_id = m.customer_id 
-and s.order_date >= m.join_date),
+from sales s
+join members m 
+	on s.customer_id = m.customer_id 
+	and s.order_date >= m.join_date),
 ranking as(
 select
 	m.customer_id, 
 	p.product_name,
         dense_rank() over(partition by m.customer_id order by m.order_date) as dense_rnk
-from 
-membership_table m
+from membership_table m
 join menu p 
-on m.product_id = p.product_id
+	on m.product_id = p.product_id
 )
 select
 	customer_id,
@@ -196,8 +192,8 @@ select
 from 
 sales s join 
 members m 
-on s.customer_id = m.customer_id 
-and s.order_date < m.join_date
+	on s.customer_id = m.customer_id 
+	and s.order_date < m.join_date
 ),
 ranking as(
 select
@@ -206,10 +202,9 @@ select
         nm.order_date,
         nm.join_date,
         dense_rank() over(partition by nm.customer_id order by nm.order_date desc) as dense_rnk
-from 
-non_member_table nm
+from non_member_table nm
 join menu p 
-on nm.product_id = p.product_id
+	on nm.product_id = p.product_id
 )
 select
 	customer_id,
@@ -228,3 +223,118 @@ where dense_rnk =1;
 | A   | sushi   | 2021-01-01   | 2021-01-07    |
 | A   | curry   | 2021-01-01   | 2021-01-07    |
 | B   | sushi   | 2021-01-04   | 2021-01-09    |
+
+---
+
+### 8. What is the total items and amount spent for each member before they became a member?
+
+```sql
+select
+	s.customer_id, 
+	count(m.product_id) as total_items,
+	sum(m.price) as amount_spent
+from sales s 
+join menu m
+	on s.product_id = m.product_id
+join members mem 
+	on s.customer_id = mem.customer_id 
+	and s.order_date < mem.join_date
+group by s.customer_id
+order by s.customer_id;
+
+```
+### Result Set 
+
+| customer_id  | product_name  |order_date  |
+|:-------------|:--------------|:-----------|
+| A   | 2   | 25   |
+| B   | 3   | 40  | 
+
+---
+
+### 9.  If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+
+```sql
+-- Solution 1
+with points_table as(
+select distinct 
+	s.customer_id,
+	m.product_name, 
+	sum(m.price) as total_price,
+	case 
+    		when m.product_name = "sushi" then 20 *sum(m.price) 
+    		else 10 *sum(m.price)
+    		end as points
+from sales s 
+join menu m
+	on s.product_id = m.product_id
+group by s.customer_id,
+	m.product_name)
+    
+select
+	customer_id,
+	sum(points) as total_points
+from points_table p
+group by 1;
+
+```
+```sql
+-- Solution 2
+With Points as
+(
+Select
+	*,
+	Case
+		 When product_id = 1 THEN price*20
+                 Else price*10
+	         End as Points
+From Menu
+)
+Select
+	S.customer_id, S
+	um(P.points) as Points
+From Sales S
+Join Points p
+	On p.product_id = S.product_id
+Group by S.customer_id;
+
+```
+### Result Set 
+
+| customer_id  | total_points  |
+|:-------------|:--------------|
+| A   | 860   |
+| B   | 940   | 
+| C   | 360   | 
+
+---
+
+### 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+
+```sql
+SELECT 
+	s.customer_id,
+    SUM(CASE
+        WHEN (DATEDIFF(mem.join_date, s.order_date) < 7) THEN m.price * 20
+        ELSE m.price * 10
+		END) AS Points
+FROM sales s
+JOIN menu m 
+	ON s.product_id = m.product_id
+JOIN members mem 
+	ON s.customer_id = mem.customer_id
+	AND s.order_date >= mem.join_date
+	AND MONTH(s.order_date) = 1
+GROUP BY s.customer_id
+order by s.customer_id
+;
+
+
+```
+
+### Result Set 
+
+| customer_id  | Points  |
+|:-------------|:--------------|
+| A   | 1020   |
+| B   | 440   | 
