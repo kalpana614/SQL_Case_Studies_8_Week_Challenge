@@ -40,6 +40,7 @@ Below are the tables that are used in this case study:
 
 
 **Table 1: runners**   
+
 The runners table shows the registration_date for each new runner
 
 | runner_id |	registration_date |
