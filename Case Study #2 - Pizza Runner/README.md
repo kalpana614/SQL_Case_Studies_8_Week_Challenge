@@ -32,7 +32,7 @@ All datasets exist within the pizza_runner database schema - be sure to include 
 
 # **Entity Relationship Diagram**  
 
-![ER Diagram](ER-Diagram.png)
+![ER Diagram](ER_Diagram.png)
 
 
 # **Tables Used**  
