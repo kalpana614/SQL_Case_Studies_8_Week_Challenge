@@ -6,7 +6,7 @@
 # Table of Contents  
 
 - [**Introduction**](#introduction)
-- [**Available Data**](#available data)
+- [**Available Data**](#available_data)
 - [**Entity Relationship Diagram**](#entity-relationship-diagram)
 - [**Tables Used**](#tables-used)
 - [**Case Study Questions**](#case-study-questions)
