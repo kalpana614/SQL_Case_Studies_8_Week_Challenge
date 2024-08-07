@@ -1,6 +1,6 @@
 # **Case Study #2 - Pizza Runner**
 
-![Pizza Runner]([Pizza Runner.png](https://8weeksqlchallenge.com/images/case-study-designs/2.png))  
+![Pizza Runner]((https://8weeksqlchallenge.com/images/case-study-designs/2.png))  
                                       
 
 # Table of Contents  
